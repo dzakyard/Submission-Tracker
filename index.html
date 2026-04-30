@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submission Tracker</title>
+  <link rel="stylesheet" href="src/output.css">
+</head>
+<body class="font-mono bg-gray-100">
+
+<div class="max-w-2xl mx-auto my-20 flex flex-col p-5">
+  <h2 class="text-center text-3xl font-bold p-5">Form Submission Tracker</h2>
+  <p class="sub">Remembers which Google Forms you've submitted — persists even after refresh.</p>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="">
+    <span class="">Your forms</span>
+    <button class="" onclick="toggleAdd()">+ Add form</button>
+  </div>
+
+  <div class="" id="add-form">
+    <div class="">
+      <label>Form name</label>
+      <input type="text" id="inp-name" placeholder="e.g. Weekly status report" />
+    </div>
+    <div class="">
+      <label>Google Form URL (optional)</label>
+      <input type="url" id="inp-url" placeholder="https://forms.gle/..." />
+    </div>
+    <div class="row2">
+      <div class="form-row">
+        <label>Deadline (optional)</label>
+        <input type="date" id="inp-deadline" />
+      </div>
+      <div class="form-row">
+        <label>Repeats every</label>
+        <select id="inp-repeat" style="width:100%">
+          <option value="none">No repeat</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      </div>
+    </div>
+    <div >
+      <button class="btn-primary" onclick="addForm()">Save</button>
+      <button class="btn-ghost" onclick="toggleAdd()">Cancel</button>
+    </div>
+  </div>
+
+  <div id="forms-list"></div>
+</div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
+
