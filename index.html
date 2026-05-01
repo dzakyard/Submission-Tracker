@@ -8,43 +8,37 @@
 </head>
 <body class="font-mono bg-gray-100">
 
-<div class="max-w-2xl mx-auto my-20 flex flex-col p-5">
+<div class="max-w-2xl mx-auto my-5 flex flex-col p-5">
   <h2 class="text-center text-3xl font-bold p-5">Form Submission Tracker</h2>
-  <p class="sub">Remembers which Google Forms you've submitted — persists even after refresh.</p>
+  <p class="sub pb-2">Remembers which Google Forms you've submitted — persists even after refresh.</p>
 
-  <div class="stats" id="stats"></div>
+  <div class="stats flex justify-center gap-40 text-center p-5" id="stats"></div>
 
-  <div class="">
-    <span class="">Your forms</span>
-    <button class="" onclick="toggleAdd()">+ Add form</button>
+  <div class="flex justify-between pb-5">
+    <span class="content-center">Your forms</span>
+    <button class="bg-white p-2 px-3 rounded-lg" id="add-form" onclick="toggleAdd()">+ Add form</button>
   </div>
 
-  <div class="" id="add-form">
-    <div class="">
-      <label>Form name</label>
-      <input type="text" id="inp-name" placeholder="e.g. Weekly status report" />
+  <div class="flex flex-col bg-white p-8 rounded-xl" id="add-form">
+    <div class="flex flex-col">
+      <label class="pb-1">Form name</label>
+      <input class="p-2 bg-gray-100 rounded-lg" type="text" id="inp-name" placeholder="e.g. Weekly status report" />
+    </div>
+    <div class="flex flex-col py-3">
+      <label class="py-1">Google Form URL (optional)</label>
+      <input class="p-2 bg-gray-100 rounded-lg" type="url" id="inp-url" placeholder="https://forms.gle/..." />
     </div>
     <div class="">
-      <label>Google Form URL (optional)</label>
-      <input type="url" id="inp-url" placeholder="https://forms.gle/..." />
-    </div>
-    <div class="row2">
-      <div class="form-row">
-        <label>Deadline (optional)</label>
-        <input type="date" id="inp-deadline" />
+      <div class="flex flex-col">
+        <label class="py-1">Date</label>
+        <input class="p-2 bg-gray-100 rounded-lg" type="date" id="inp-deadline"/>
       </div>
       <div class="form-row">
-        <label>Repeats every</label>
-        <select id="inp-repeat" style="width:100%">
-          <option value="none">No repeat</option>
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-        </select>
       </div>
     </div>
-    <div >
-      <button class="btn-primary" onclick="addForm()">Save</button>
-      <button class="btn-ghost" onclick="toggleAdd()">Cancel</button>
+    <div class="flex pt-3 gap-5">
+      <button class="btn-primary p-2 bg-gray-100 rounded-lg" onclick="addForm()">Save</button>
+      <button class="btn-ghost p-2 bg-gray-100 rounded-lg" onclick="toggleAdd()">Cancel</button>
     </div>
   </div>
 
