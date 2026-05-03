@@ -12,17 +12,17 @@
   <h2 class="text-center text-3xl font-bold p-5 pb-1">Form Submission Tracker</h2>
   <p class="sub">Remembers which Google Forms you've submitted — persists even after refresh.</p>
 
-  <div class="stats flex justify-center gap-40 text-center pt-3" id="stats"></div>
+  <div class="stats flex justify-around text-center pt-3" id="stats"></div>
 
   <div class="flex justify-between pb-2">
     <span class="content-center">Your forms</span>
-    <button class="p-2 px-3 rounded-lg cursor-pointer transition duration-300 ease-in-out hover:bg-black/5 active:bg-black/10 border-2 border-white bg-gray-100" onclick="toggleAdd()">+ Add form</button>
+    <button class="p-2 px-3 rounded-lg cursor-pointer transition duration-300 ease-in-out hover:bg-black/5 active:bg-black/10 border-1 border-white bg-gray-100" onclick="toggleAdd()">+ Add form</button>
   </div>
 
   <div class="flex flex-col bg-white p-5 rounded-xl hidden" id="add-form">
     <div class="flex flex-col">
       <label class="pb-1">Form name</label>
-      <input class="p-2 bg-gray-100 rounded-lg" type="text" id="inp-name" placeholder="e.g. Weekly status report" />
+      <input class="p-2 bg-gray-100 rounded-lg" type="text" id="inp-name" placeholder="e.g. English For Daily Converstations" />
     </div>
     <div class="flex flex-col py-3">
       <label class="py-1">Google Form URL (optional)</label>
@@ -45,7 +45,7 @@
   <div id="forms-list"></div>
 </div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>

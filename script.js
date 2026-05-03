@@ -3,14 +3,14 @@ let forms = [];
 
 async function load() {
   try {
-    const r = await window.storage.get(STORAGE_KEY);
-    if (r && r.value) forms = JSON.parse(r.value);
+    const r = await window.localStorage.getItem(STORAGE_KEY);
+    if (r) forms = JSON.parse(r);
   } catch(e) { forms = []; }
   render();
 }
 
 async function save() {
-  try { await window.storage.set(STORAGE_KEY, JSON.stringify(forms)); } catch(e) {}
+  try { await window.localStorage.setItem(STORAGE_KEY, JSON.stringify(forms)); } catch(e) {}
 }
 
 function toggleAdd() {
@@ -31,7 +31,6 @@ function addForm() {
     name,
     url: document.getElementById('inp-url').value.trim(),
     deadline: document.getElementById('inp-deadline').value,
-    repeat: document.getElementById('inp-repeat').value,
     submitted: false,
     submittedAt: null,
     createdAt: new Date().toISOString()
@@ -41,7 +40,6 @@ function addForm() {
   document.getElementById('inp-name').value = '';
   document.getElementById('inp-url').value = '';
   document.getElementById('inp-deadline').value = '';
-  document.getElementById('inp-repeat').value = 'none';
   document.getElementById('add-form').classList.add('hidden');
   render();
 }
@@ -67,29 +65,7 @@ function deleteForm(id) {
   save(); render();
 }
 
-function resetIfRepeat(f) {
-  if (!f.submitted || f.repeat === 'none') return f;
-  const sub = new Date(f.submittedAt);
-  const now = new Date();
-  let reset = false;
-  if (f.repeat === 'weekly') {
-    const msWeek = 7 * 24 * 3600 * 1000;
-    if (now - sub > msWeek) reset = true;
-  } else if (f.repeat === 'monthly') {
-    const nextMonth = new Date(sub);
-    nextMonth.setMonth(nextMonth.getMonth() + 1);
-    if (now > nextMonth) reset = true;
-  }
-  if (reset) {
-    f.submitted = false;
-    f.submittedAt = null;
-    save();
-  }
-  return f;
-}
-
 function getStatus(f) {
-  f = resetIfRepeat(f);
   if (f.submitted) return 'done';
   if (f.deadline) {
     const d = new Date(f.deadline + 'T23:59:59');
@@ -130,25 +106,24 @@ function render() {
     const badgeLabel = status === 'done' ? '✓ Submitted' : status === 'overdue' ? '! Overdue' : '○ Pending';
     const meta = [];
     if (f.deadline) meta.push('Due ' + fmt(f.deadline));
-    if (f.repeat !== 'none') meta.push('Repeats ' + f.repeat);
     if (f.submitted && f.submittedAt) meta.push('Submitted ' + fmt(f.submittedAt));
     return `
-      <div class="card">
+      <div class="flex flex-col bg-white/70 p-5 rounded-xl">
         <div class="item">
           <div class="item-info">
-            <div class="item-name">${f.name}</div>
+            <div class="item-name font-semibold text-lg">${f.name}</div>
             <div class="item-meta">${meta.join(' · ')}</div>
-            ${f.url ? `<a href="${f.url}" class="link" target="_blank">Open form ↗</a>` : ''}
+            ${f.url ? `<a href="${f.url}" class="link text-sm text-blue-500" target="_blank">Open form ↗</a>` : ''}
           </div>
           <div class="item-actions">
             <span class="badge ${badgeClass}">${badgeLabel}</span>
           </div>
         </div>
         <hr class="divider" />
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex gap-8 flex-wrap">
           ${status !== 'done'
-            ? `<button class="btn-primary" onclick="markSubmitted('${f.id}')">Mark as submitted</button>`
-            : `<button class="btn-ghost" onclick="markUnsubmitted('${f.id}')">Undo submission</button>`
+            ? `<button class="p-2 rounded-lg cursor-pointer transition duration-300 ease-in-out hover:bg-black/5 active:bg-black/10 border-2 border-gray-100" onclick="markSubmitted('${f.id}')">Mark as submitted</button>`
+            : `<button class="p-2 rounded-lg cursor-pointer transition duration-300 ease-in-out hover:bg-black/5 active:bg-black/10 border-2 border-gray-100" onclick="markUnsubmitted('${f.id}')">Undo submission</button>`
           }
           <button class="btn-danger" onclick="deleteForm('${f.id}')">Remove</button>
         </div>
